@@ -1,6 +1,6 @@
 # REST API Дошки оголошень
 
-REST API для дошки оголошень з JWT-автентифікацією, авторизацією та контролем доступу. Реалізовано в рамках курсового завдання магістратури.
+REST API для дошки оголошень з JWT-автентифікацією, авторизацією та контролем доступу. Навчальний проект, Дз №2.
 
 ## Загальний опис
 
@@ -45,10 +45,11 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/announcements?schema=
 JWT_SECRET=your-secret-key-at-least-256-bits-long
 ```
 
-4. Застосуйте міграцію:
+4. Застосуйте міграцію та згенеруйте Prisma Client:
 
 ```bash
 npm run prisma:migrate
+npm run prisma:generate
 ```
 
 5. Запустіть проект:
@@ -66,7 +67,7 @@ npm run dev
 | POST  | `/auth/register` | Реєстрація користувача        | Ні   |
 | POST  | `/auth/login`    | Вхід користувача              | Ні   |
 | POST  | `/auth/refresh`  | Оновлення токенів             | Ні   |
-| POST  | `/auth/logout`   | Вихід                         | Ні   |
+| POST  | `/auth/logout`   | Вихід                         | так  |
 | GET   | `/auth/me`       | Профіль поточного користувача | Так  |
 
 ### Оголошення
@@ -112,7 +113,7 @@ PATCH використовує ті ж правила валідації, але
 ## Структура проекту
 
 ```
-boilerplate/
+fs_server/
 ├── prisma/
 │   ├── schema.prisma
 │   ├── client.ts
@@ -140,25 +141,14 @@ boilerplate/
 └── README.md
 ```
 
-## Бойлерплейт
-
-Мінімальний стартовий набір:
-
-- `package.json` з усіма залежностями
-- `tsconfig.json` з налаштуваннями TypeScript
-- `src/openapi.ts` з ініціалізованим registry та `bearerAuth`
-- `prisma/client.ts` з ініціалізованим Prisma Client (PostgreSQL через `@prisma/adapter-pg`)
-- `prisma.config.ts` з конфігурацією Prisma
-- `.env.example` з шаблоном змінних середовища
-
 ## Доступні скрипти
 
-| Команда                   | Опис                                 |
-| ------------------------- | ------------------------------------ |
-| `npm run dev`             | Запуск з hot reload (`node --watch`) |
-| `npm start`               | Запуск у виробничому режимі          |
-| `npm run prisma:migrate`  | Створення та застосування міграцій   |
-| `npm run prisma:generate` | Генерація Prisma Client              |
+| Команда                   | Опис                                |
+| ------------------------- | ----------------------------------- |
+| `npm run dev`             | Запуск з hot reload (`tsx --watch`) |
+| `npm start`               | Запуск у виробничому режимі         |
+| `npm run prisma:migrate`  | Створення та застосування міграцій  |
+| `npm run prisma:generate` | Генерація Prisma Client             |
 
 ## Документація API
 

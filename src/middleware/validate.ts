@@ -4,17 +4,19 @@ import { ZodType } from "zod";
 type Source = "body" | "params" | "query";
 
 const validate =
-  (source: Source) => (schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {
+  (source: Source) =>
+  (schema: ZodType) =>
+  (req: Request, res: Response, next: NextFunction) => {
     const result = schema.safeParse(req[source]);
     if (!result.success) {
       return res.status(400).json({
-  error: "Validation failed",
-  details: {
-    [source]: result.error.issues.map((i) =>
-      i.path.length ? `${i.path.join(".")}: ${i.message}` : i.message
-    ),
-  },
-});
+        error: "Validation failed",
+        details: {
+          [source]: result.error.issues.map((i) =>
+            i.path.length ? `${i.path.join(".")}: ${i.message}` : i.message,
+          ),
+        },
+      });
     }
     if (source === "body") {
       req.body = result.data;
